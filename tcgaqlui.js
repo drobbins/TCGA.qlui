@@ -4,7 +4,7 @@
 	/*globals TCGA:false*/
 
 	TCGA.loadScript([
-		"https://dl.dropbox.com/u/4000409/Repos/TCGA.ql/tcgaql.js",
+		"https://raw.github.com/drobbins/TCGA.ql/master/tcgaql.js",
 		"https://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js" /*globals angular:false*/
 	], function () {
 
@@ -31,20 +31,21 @@
 					$scope.updateOptions = function updateOptions () {
 						QL[$scope.filterName]().done(function (options) {
 							$scope.$apply( function () {
-								$scope.options = options;
-								$scope.option = [];
+								delete $scope.options.def;
+								angular.extend($scope.options, options);
+								$scope.selectedOptions = [];
 							});
 						});
 					};
 					$scope.updateFilters = function updateFilters () {
-						QL[$scope.filterName]($scope.option);
+						QL[$scope.filterName]($scope.selectedOptions);
 					};
 				},
 				template : [
 					"<div class=\"filter\">",
 					"	<div ng-transclude></div>",
 					"	<select ng-model=\"filterName\" ng-options=\"f for f in filters\" ng-change=\"updateOptions()\"></select>",
-					"	<select ng-model=\"option\" ng-options=\"o for o in options\" ng-change=\"updateFilters()\" multiple></select>",
+					"	<select ng-model=\"selectedOptions\" ng-options=\"o for (k,o) in options\" ng-change=\"updateFilters()\" multiple></select>",
 					"</div>"
 				].join("")
 			};
