@@ -27,7 +27,7 @@
 				transclude : true,
 				link : function ( $scope, element, attributes, controller) {
 					$scope.filters = QL.filterNames;
-					$scope.options = ["select filter type"];
+					$scope.options = { def : "select filter type"};
 					$scope.updateOptions = function updateOptions () {
 						QL[$scope.filterName]().done(function (options) {
 							$scope.$apply( function () {
