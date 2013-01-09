@@ -3,10 +3,12 @@
 	/*jshint browser:true jquery:true*/
 	/*globals TCGA:false*/
 
-	TCGA.loadScript([
+	TCGA.loadScript({
+		registerModules : false,
+		scripts : [
 		"https://raw.github.com/drobbins/TCGA.ql/master/tcgaql.js",
 		"https://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js" /*globals angular:false*/
-	], function () {
+	]}, function () {
 
 		var app = angular.module("tcgaqlui", []);
 
@@ -66,7 +68,8 @@
 				template : [
 					"<div class=\"query\">",
 					"	<div ng-transclude></div>",
-					"	<pre>{{query}}</pre>",
+					"	<a class=\"accordion-toggle\" data-toggle=\"collapse\" data-target=\"#query-listing\" href=\"#\">Toggle Query Listing</a>",
+					"	<div id=\"query-listing\" class=\"collapse\"><pre>{{query}}</pre></div>",
 					"</div>"
 				].join("")
 			};
@@ -82,7 +85,7 @@
 				"	<div class=\"span3\"><filter> Filter 3</filter></div>",
 				"</div>",
 				"<div class=\"row-fluid\">",
-				"	<div class=\"span12\"><query> Query String:</query></div>",
+				"	<div class=\"span12\"><query></query></div>",
 				"</div>"
 				].join(""),
 			switchTab : true
