@@ -16,11 +16,6 @@
 			return TCGA.ql;
 		});
 
-		app.controller("qlMain", function ($scope) {
-			$scope.message = "Hello Friends!";
-			$scope.template = "";
-		});
-
 		app.directive("filter", function ($window, QL) {
 			return {
 				restrict : "E",
