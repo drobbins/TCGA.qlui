@@ -72,6 +72,38 @@
 			};
 		});
 
+		app.directive("results", function (QL) {
+			return {
+				restrict : "E",
+				replace : true,
+				scope : true,
+				transclude : true,
+				link : function ( $scope ) {
+					$scope.results = { results : { bindings : [{file : { value: "No results loaded yet"}}]}};
+					$scope.getResults = function getResults () {
+						$scope.$broadcast("showSpinner");
+						QL.run().done(function (results) {
+							$scope.$apply(function () {
+								$scope.$broadcast("hideSpinner");
+								$scope.results = results;
+							});
+						});
+					};
+				},
+				template : [
+					"<div class=\"query-results\">",
+					"	<div ng-transclude></div>",
+					"	<button class=\"btn btn-primary\" ng-click=\"getResults()\">Get Results</button> <spinner></spinner>",
+					"	<table class=\"table table-condensed\">",
+					"		<thead><tr><th>File Name</th><th>URL</th></tr></thead>",
+					"		<tbody>",
+					"			<tr ng-repeat=\"binding in results.results.bindings\"><td>{{binding.file.value}}</td><td><a href=\"{{binding.url.value}}\">{{binding.url.value}}</a></td></tr>",
+					"		</tbody>",
+					"	</table>",
+					"</div>"
+				].join("")
+			};
+		});
 
 		app.directive("spinner", function () {
 			return {
@@ -105,6 +137,9 @@
 				"</div>",
 				"<div class=\"row-fluid\">",
 				"	<div class=\"span12\"><query></query></div>",
+				"</div>",
+				"<div class=\"row-fluid\">",
+				"	<div class=\"span12\"><results><h4>Query Results</h4></results></div>",
 				"</div>"
 				].join(""),
 			switchTab : true
