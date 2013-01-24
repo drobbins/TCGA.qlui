@@ -26,8 +26,10 @@
 					$scope.filters = QL.filterNames;
 					$scope.options = { def : "select filter type"};
 					$scope.updateOptions = function updateOptions () {
+						$scope.$broadcast("showSpinner");
 						QL[$scope.filterName]().done(function (options) {
 							$scope.$apply( function () {
+								$scope.$broadcast("hideSpinner");
 								delete $scope.options.def;
 								angular.extend($scope.options, options);
 								$scope.selectedOptions = [];
@@ -40,7 +42,7 @@
 				},
 				template : [
 					"<div class=\"filter\">",
-					"	<div ng-transclude></div>",
+					"	<span ng-transclude></span> <spinner></spinner>",
 					"	<select ng-model=\"filterName\" ng-options=\"f for f in filters\" ng-change=\"updateOptions()\"></select>",
 					"	<select ng-model=\"selectedOptions\" ng-options=\"o for (k,o) in options\" ng-change=\"updateFilters()\" multiple></select>",
 					"</div>"
