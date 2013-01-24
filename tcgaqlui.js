@@ -70,6 +70,28 @@
 			};
 		});
 
+
+		app.directive("spinner", function () {
+			return {
+				restrict : "E",
+				replace : true,
+				scope : true,
+				transclude : true,
+				link : function ( $scope ) {
+					$scope.currentClass = "hide";
+					$scope.$on("showSpinner", function () {
+						$scope.currentClass = "";
+					});
+					$scope.$on("hideSpinner", function () {
+						$scope.currentClass = "hide";
+					});
+				},
+				template : [
+					"<span ng-class=\"currentClass\"><img src=\"img/loader.gif\"> Loading...</span>"
+				].join("")
+			};
+		});
+
 		TCGA.ui.registerTab({
 			id : "tcgaqlui",
 			title : "TCGA Query Language",
