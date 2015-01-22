@@ -6,7 +6,7 @@
 	TCGA.loadScript({
 		registerModules : false,
 		scripts : [
-		"https://raw.github.com/drobbins/TCGA.ql/master/tcgaql.js",
+		"http://drobbins.github.io/TCGA.ql/tcgaql.js",
 		"https://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js" /*globals angular:false*/
 	]}, function () {
 
